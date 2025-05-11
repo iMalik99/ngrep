@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact Us - [Agency Name]</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+      padding: 1rem;
+    }
+    .main-content {
+      max-width: 1200px;
+      margin: auto;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .hero {
+      background: #556b2f; 
+      color: #fff;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: #6b8e23;
+      transform: skewY(-2deg);
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      padding: 3rem 2rem;
+    }
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .contact-info h2 {
+      font-size: 1.5rem;
+      color: #2d3436;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+    .info-item:hover {
+      transform: translateX(10px);
+    }
+    .info-item i {
+      color: #556b2f;
+      width: 30px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+    .contact-form {
+      background: #fff;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .contact-form h2 {
+      font-size: 1.5rem;
+      color: #2d3436;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #2d3436;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #556b2f;
+      box-shadow: 0 0 10px rgba(76,175,80,0.2);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 150px;
+    }
+    .btn-submit {
+      display: inline-block;
+      background: #556b2f;
+      color: #fff;
+      border: none;
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+    .btn-submit:hover {
+      background: #388e3c;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .contact-wrapper {
+        grid-template-columns: 1fr;
+        padding: 2rem 1rem;
+      }
+      .hero {
+        padding: 2rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="main-content">
+
+    <section class="hero">
+      <h1>Contact Us</h1>
+      <p>Welcome to the NGREP Contact Page. We are here to assist you with your inquiries and provide the information you need.</p>
+    </section>
+
+    <div class="contact-wrapper">
+
+      <!-- Contact Details -->
+      <div class="contact-info">
+        <h2>General Inquiries</h2>
+
+        <div class="info-item">
+          <i class="fas fa-phone"></i>
+          <span>Phone: <a href="tel:+2348061546680" class="text-decoration-none">(+234)8061546680</a></span>
+        </div>
+
+        <div class="info-item">
+          <i class="fas fa-envelope"></i>
+          <span>Email: <a href="mailto:info@sspolicylab.com" class="text-decoration-none">info@sspolicylab.com</a></span>
+        </div>
+
+        <div class="info-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Address: 123 Government Ave, Capital City, Country</span>
+        </div>
+      </div>
+
+      <!-- Online Form -->
+      <form class="contact-form" id="contactForm">
+        <h2>Online Contact Form</h2>
+
+        <div class="form-group">
+          <label for="name">Name<span style="color:#e32;"> *</span></label>
+          <input type="text" id="name" name="name" required placeholder="Your full name">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address<span style="color:#e32;"> *</span></label>
+          <input type="email" id="email" name="email" required placeholder="you@example.com">
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="+234 800 000 0000">
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Subject<span style="color:#e32;"> *</span></label>
+          <select id="subject" name="subject" required>
+            <option value="">Select a subject</option>
+            <option>General Question</option>
+            <option>Feedback</option>
+            <option>Report an Issue</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message<span style="color:#e32;"> *</span></label>
+          <textarea id="message" name="message" required placeholder="Type your message here…"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Submit</button>
+      </form>
+
+    </div>
+
+  </div>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Thank you! Your message has been sent.');
+      // Here you’d normally send via AJAX or similar…
+      e.target.reset();
+    });
+  </script>
+
+</body>
+</html>
