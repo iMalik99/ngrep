@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGREP - Downloads</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f1f7f2; 
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1001;
+            background-color: #556b2f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            height: 100vh;
+            border-right: 1px solid #ddd;
+            padding: 0;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-logo {
+            padding: 3px 8px;
+            border-bottom: 0px solid #ddd;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            height: 80px;
+        }
+
+        .sidebar-logo img {
+            width: 95%;
+            height: auto;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-menu li.active a {
+            color: inherit;           
+            text-decoration: none;    
+            display: block;           
+            transition: background 0.3s ease;
+        }
+
+        .sidebar-menu li.active a:hover {
+            color: #556b2f;             
+        }
+
+        .sidebar-menu li {
+            padding: 10px 15px;
+            font-size: 16px;
+            color: #333;
+            cursor: pointer;
+            line-height: 1.3;
+        }
+
+        .sidebar-menu li.active {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        .sidebar-menu li.submenu {
+            padding-left: 30px;
+            color: #666;
+            font-size: 14px;
+            position: relative;
+        }
+
+        .sidebar-menu li.submenu a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s ease;
+        }
+
+        .sidebar-menu li.submenu a:hover {
+            color: #556b2f;
+        }
+
+        .sidebar-menu li.submenu span::before {
+            content: "→";
+            position: absolute;
+            left: 18px;
+            font-size: 10px;
+            color: #999;
+        }
+
+
+        .sidebar-menu li.submenu-title {
+            font-weight: bold;
+            margin-top: 5px;
+            color: #333;
+        }
+        
+        .sidebar-menu li.active-submenu-title {
+            font-weight: bold;
+            margin-top: 5px;
+            color: #556b2f;
+        }
+
+        .sidebar-menu li.submenu-title a {
+            color: inherit;           
+            text-decoration: none;    
+            display: block;           
+            transition: background 0.3s ease;
+        }
+
+        .sidebar-menu li.submenu-title a:hover {
+            color: #556b2f;             
+        }
+
+        .sidebar-footer {
+            padding: 0 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-footer button {
+            width: 100%;
+            padding: 10px 8px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            text-align: left;
+        }
+
+        .sidebar-footer button i {
+            margin-right: 5px;
+            width: 16px;
+        }
+
+        .sidebar-footer .settings {
+            background-color: #f5f5f5;
+            color: #075e54;
+        }
+
+        .sidebar-footer .support {
+            background-color: #f5f5f5;
+            color: #0089d0;
+        }
+
+        .sidebar-footer .logout {
+            background-color: #f5f5f5;
+            color: #dc3545;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+            flex: 1;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            flex-wrap: wrap;
+        }
+
+        .header-title {
+            font-size: 22px;
+            color: #556b2f;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .header-buttons button {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+
+        .header-buttons .submission a {
+            color: inherit;           
+            text-decoration: none;    
+            display: block;           
+            transition: background 0.3s ease;
+        }
+
+        .header-buttons .submission a:hover {
+            color: #556b2f;             
+        }
+
+        .header-buttons .notification {
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-profile img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ddd;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Downloads Page Specific Styles */
+        .downloads-container {
+            margin-top: 20px;
+        }
+
+        .quarter-section {
+            margin-bottom: 30px;
+        }
+
+        .quarter-title {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 15px;
+            font-weight: normal;
+            text-transform: uppercase;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .download-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .download-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .quarter-label {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .download-type {
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Quarter Colors */
+        /* Q1 */
+        .q1-projects {
+            color: #2D8259;
+        }
+
+        .q1-targets {
+            color: #204E79;
+        }
+
+        .q1-kpis {
+            color: #F59D17;
+        }
+
+        .q1-reports {
+            color: #E7343A;
+        }
+
+        /* Q2 */
+        .q2-projects {
+            color: #2D8259;
+        }
+
+        .q2-targets {
+            color: #204E79;
+        }
+
+        .q2-kpis {
+            color: #F59D17;
+        }
+
+        .q2-reports {
+            color: #E7343A;
+        }
+
+        /* Q3 */
+        .q3-projects {
+            color: #00A8E8;
+        }
+
+        .q3-targets {
+            color: #8BC34A;
+        }
+
+        .q3-kpis {
+            color: #E91E63;
+        }
+
+        .q3-reports {
+            color: #795548;
+        }
+
+        /* Q4 */
+        .q4-projects {
+            color: #00A8E8;
+        }
+
+        .q4-targets {
+            color: #8BC34A;
+        }
+
+        .q4-kpis {
+            color: #E91E63;
+        }
+
+        .q4-reports {
+            color: #795548;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .download-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: block;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                width: 80%;
+                max-width: 300px;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 60px 15px 20px 15px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .header-title {
+                margin-bottom: 15px;
+            }
+
+            .user-profile span {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-buttons {
+                gap: 5px;
+            }
+
+            .header-buttons button {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+
+            .quarter-label {
+                font-size: 28px;
+            }
+
+            .download-type {
+                font-size: 14px;
+            }
+
+            .sidebar-menu li {
+                padding: 12px 15px;
+                font-size: 16px;
+            }
+
+            /* Add overlay when sidebar is open */
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0,0,0,0.5);
+                z-index: 999;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar Overlay (Mobile) -->
+    <div class="sidebar-overlay"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <img src="logo-ori.jpg" alt="NGREP Logo">
+        </div>
+        <ul class="sidebar-menu">
+            <li class="active"><a href="dashboard.html">Dashboard</a></li>
+            <li class="submenu-title"><a href="my-projects.html">My Projects</a></li>
+            <li class="submenu"><b><a href="new-projects.html">New Project</a></b></li>
+            <li class="submenu"><b>Update Project</b></li>
+            <li class="submenu"><b>Download All Projects</b></li>
+            <li class="submenu-title">KPI & Targets</li>
+            <li class="submenu"><b>KPI Progress</b></li>
+            <li class="submenu"><b>Update KPI Progress</b></li>
+            <li class="submenu"><b>Targets</b></li>
+            <li class="submenu">Q1 Target <span style="font-size:9px;color:#999">(Jan-Mar)</span></li>
+            <li class="submenu">Q2 Target <span style="font-size:9px;color:#999">(Apr-Jun)</span></li>
+            <li class="submenu">Q3 Target <span style="font-size:9px;color:#999">(Jul-Sep)</span></li>
+            <li class="submenu">Q4 Target <span style="font-size:9px;color:#999">(Oct-Dec)</span></li>
+            <li class="submenu"><b>Pending Targets</b></li>
+            <li class="submenu"><b>Deadlines</b></li>
+            <li class="submenu"><b>Download KPI's</b></li>
+            <li class="submenu"><b>Download Targets</b></li>
+            <li class="submenu-title">Metrics</li>
+            <li class="submenu-title">Reports</li>
+            <li class="submenu"><b>New Report</b></li>
+            <li class="submenu"><b>Submitted Reports</b></li>
+            <li class="submenu"><b>Download Reports</b></li>
+            <li class="submenu">Q1 Report <span style="font-size:9px;color:#999">(Jan-Mar)</span></li>
+            <li class="submenu">Q2 Report <span style="font-size:9px;color:#999">(Apr-Jun)</span></li>
+            <li class="submenu">Q3 Report <span style="font-size:9px;color:#999">(Jul-Sep)</span></li>
+            <li class="submenu">Q4 Report <span style="font-size:9px;color:#999">(Oct-Dec)</span></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button class="settings"><i class="fas fa-cog"></i> User Settings</button>
+            <button class="support"><i class="fas fa-headset"></i> Help & Support</button>
+            <button class="logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-title">Downloads:</div>
+            <div class="header-buttons">
+                <button><i class="fas fa-download"></i> Downloads</button>
+                <button class="submission"><a href="submission-1.html"><i class="fas fa-plus"></i> New</a></button>
+                <button class="notification">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">1</span>
+                </button>
+                <div class="user-profile">
+                    <span id="userName">Loading...</span>
+                    <img src="user.png" alt="User Profile">
+                </div>
+            </div>
+        </div>
+
+        <!-- Downloads Content -->
+        <div class="downloads-container">
+            <!-- Q1 Downloads -->
+            <div class="quarter-section">
+                <h3 class="quarter-title">Q1 Downloads</h3>
+                <div class="download-grid">
+                    <div class="download-card">
+                        <div class="quarter-label q1-projects">Q1</div>
+                        <div class="download-type">Projects</div>
+                    </div>
+                    <div class="download-card">
+                        <div class="quarter-label q1-targets">Q1</div>
+                        <div class="download-type">Targets</div>
+                    </div>
+                    <div class="download-card">
+                        <div class="quarter-label q1-kpis">Q1</div>
+                        <div class="download-type">KPIs</div>
+                    </div>
+                    <div class="download-card">
+                        <div class="quarter-label q1-reports">Q1</div>
+                        <div class="download-type">Reports</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q2 Downloads -->
+            <div class="quarter-section">
+                <h3 class="quarter-title">Q2 Downloads</h3>
+                <div class="download-grid">
+                    <div class="download-card">
+                        <div class="quarter-label q2-projects">Q2</div>
+                        <div class="download-type">Projects</div>
+                    </div>
+                    <div class="download-card">
+                        <div class="quarter-label q2-targets">Q2</div>
+                        <div class="download-type">Targets</div>
+                    </div>
+                    <div class="download-card">
+                        <div class="quarter-label q2-kpis">Q2</div>
+                        <div class="download-type">KPIs</div>
+                    </div>
+                    <div class="download-card">
+                        <div class="quarter-label q2-reports">Q2</div>
+                        <div class="download-type">Reports</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q3 Downloads -->
+            <div class="quarter-section">
+                <h3 class="quarter-title">Q3 Downloads</h3>
+                <div class="download-grid">
+                    <div class="download-card">
+                        <div class="quarter-label q3-projects">Q3</div>
+                        <div class="download-type">Projects</div>
+                    </div>
+                    <div class="download-card">
+                        <div class="quarter-label q3-targets">Q3</div>
+                        <div class="download-type">Targets</div>
+                    </div>
+                    <div class="download-card">
+                        <div class="quarter-label q3-kpis">Q3</div>
+                        <div class="download-type">KPIs</div>
+                    </div>
+                    <div class="download-card">
+                        <div class="quarter-label q3-reports">Q3</div>
+                        <div class="download-type">Reports</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q4 Downloads -->
+            <div class="quarter-section">
+                <h3 class="quarter-title">Q4 Downloads</h3>
+                <div class="download-grid">
+                    <div class="download-card">
+                        <div class="quarter-label q4-projects">Q4</div>
+                        <div class="download-type">Projects</div>
+                    </div>
+                    <div class="download-card">
+                        <div class="quarter-label q4-targets">Q4</div>
+                        <div class="download-type">Targets</div>
+                    </div>
+                    <div class="download-card">
+                        <div class="quarter-label q4-kpis">Q4</div>
+                        <div class="download-type">KPIs</div>
+                    </div>
+                    <div class="download-card">
+                        <div class="quarter-label q4-reports">Q4</div>
+                        <div class="download-type">Reports</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Copyright © 2025 SPIPolyLab | All rights reserved</p>
+        </div>
+    </div>
+
+    <script>
+        // User data - You would normally get this from a server or localStorage
+       
+        // Toggle sidebar on mobile
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarOverlay = document.querySelector('.sidebar-overlay');
+        mobileToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+        });
+        sidebarOverlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+        });
+
+        // Display user name in header
+        document.getElementById('userName').textContent = currentUser.fullName;
+
+        sidebarOverlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+        });
+
+        // Handle logout action
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to logout?')) {
+                // In a real application, you would clear session data here
+                // For example: localStorage.removeItem('userToken');
+                
+                // Redirect to login page
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Handle download action
+        document.querySelectorAll('.download-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const quarterLabel = this.querySelector('.quarter-label').textContent;
+                const downloadType = this.querySelector('.download-type').textContent;
+                alert(`Download started for ${quarterLabel} ${downloadType}`);
+            });
+        });
+    </script>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/68208f9608bed819150dc644/1iqvj1pit';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+</body>
+</html>

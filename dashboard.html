@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NGREP Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <!-- Mobile overlay -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <img src="logo-ori.jpg" alt="NGREP Logo">
+    </div>
+    <ul class="sidebar-menu">
+      <li class="active">Dashboard</li>
+      <li class="submenu-title"><a href="my-projects.html">My Projects</a></li>
+      <li class="submenu"><b><a href="new-projects.html">New Project</a></b></li>
+      <li class="submenu"><b>Update Project</b></li>
+      <li class="submenu"><b>Download All Projects</b></li>
+      <li class="submenu-title">KPI & Targets</li>
+      <li class="submenu"><b>KPI Progress</b></li>
+      <li class="submenu"><b>Update KPI Progress</b></li>
+      <li class="submenu"><b>Targets</b></li>
+      <li class="submenu">Q1 Target <span style="font-size:9px;color:#999">(Jan-Mar)</span></li>
+      <li class="submenu">Q2 Target <span style="font-size:9px;color:#999">(Apr-Jun)</span></li>
+      <li class="submenu">Q3 Target <span style="font-size:9px;color:#999">(Jul-Sep)</span></li>
+      <li class="submenu">Q4 Target <span style="font-size:9px;color:#999">(Oct-Dec)</span></li>
+      <li class="submenu"><b>Pending Targets</b></li>
+      <li class="submenu"><b>Deadlines</b></li>
+      <li class="submenu"><b>Download KPI's</b></li>
+      <li class="submenu"><b>Download Targets</b></li>
+      <li class="submenu-title">Metrics</li>
+      <li class="submenu-title">Reports</li>
+      <li class="submenu"><b>New Report</b></li>
+      <li class="submenu"><b>Submitted Reports</b></li>
+      <li class="submenu"><b>Download Reports</b></li>
+      <li class="submenu">Q1 Report <span style="font-size:9px;color:#999">(Jan-Mar)</span></li>
+      <li class="submenu">Q2 Report <span style="font-size:9px;color:#999">(Apr-Jun)</span></li>
+      <li class="submenu">Q3 Report <span style="font-size:9px;color:#999">(Jul-Sep)</span></li>
+      <li class="submenu">Q4 Report <span style="font-size:9px;color:#999">(Oct-Dec)</span></li>
+    </ul>
+    <div class="sidebar-footer">
+      <button class="settings" id="openSettings"><i class="fas fa-cog"></i> User Settings</button>
+      <button class="support"><i class="fas fa-headset"></i> Help & Support</button>
+      <button class="logout"><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="main-content">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-title">
+        <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+        <h1>Dashboard</h1>
+      </div>
+      <div class="header-buttons">
+        <button class="download"><a href="downloads.html"><i class="fas fa-download"></i> Downloads</a></button>
+        <button class="submission"><a href="submission-1.html"><i class="fas fa-plus"></i> New Submission</a></button>
+        <button class="notification">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge">1</span>
+        </button>
+        <div class="user-profile">
+          <span id="userName">Loading...</span>
+          <img src="user.png" alt="User Profile"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Cards -->
+    <div class="dashboard-cards">
+      <div class="card"><div class="card-number">5</div><div class="card-label">Projects</div></div>
+      <div class="card"><div class="card-number">12</div><div class="card-label">Targets</div></div>
+      <div class="card"><div class="card-number">7</div><div class="card-label">Key Metrics</div></div>
+      <div class="card"><div class="card-number">3</div><div class="card-label">Pending Targets</div></div>
+      <div class="card"><div class="card-number">8</div><div class="card-label">Upcoming Deadlines</div></div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section">
+      <div class="chart-card">
+        <h3>Performance Overview</h3>
+        <div class="performance-chart">
+          <div class="bar"><div class="bar-value"></div><span>Q1</span></div>
+          <div class="bar"><div class="bar-value"></div><span>Q2</span></div>
+          <div class="bar"><div class="bar-value"></div><span>Q3</span></div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <h3>Metrics by Status</h3>
+        <div class="donut-chart"><div class="donut-hole"></div></div>
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-color green"></div><span>Successful</span></div>
+          <div class="legend-item"><div class="legend-color orange"></div><span>In Progress</span></div>
+          <div class="legend-item"><div class="legend-color gray"></div><span>Pending</span></div>
+          <div class="legend-item"><div class="legend-color red"></div><span>Not Completed</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tables Section -->
+    <div class="tables-section">
+      <div class="table-card">
+        <h3>Target Summary</h3>
+        <table>
+          <thead>
+            <tr><th>Target</th><th>Status</th><th>Reason</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Infrastructure Development</td><td><span class="status-badge status-pending">Pending</span></td><td>-</td></tr>
+            <tr><td>Educational Programmes</td><td><span class="status-badge status-progress">In Progress</span></td><td>Contractor Issue</td></tr>
+            <tr><td>School Clinic Expansion</td><td><span class="status-badge status-completed">Completed</span></td><td>Completed Project</td></tr>
+            <tr><td>School Students Chairs</td><td><span class="status-badge status-not-started">Not Started</span></td><td>Awaiting Approval</td></tr>
+            <tr><td>Water Systems Upgrade</td><td><span class="status-badge status-not-started">Not Started</span></td><td>Rejected</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-card">
+        <h3>Projects</h3>
+        <table>
+          <thead>
+            <tr><th>Target</th><th>Status</th><th>KPI%</th><th>Remarks</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Road Construction</td><td>In Progress</td><td>50%</td><td>On Track</td></tr>
+            <tr><td>School Renovation</td><td>Successful</td><td>100%</td><td>Finished</td></tr>
+            <tr><td>Clinic Upgrade</td><td>Pending</td><td>0%</td><td>W.Approval</td></tr>
+            <tr><td>Water Supply</td><td>In Progress</td><td>80%</td><td>On Progress</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>Copyright © 2025 SSPolicyLab. | All rights reserved</p>
+    </div>
+  </div>
+
+  <!-- User Settings Modal -->
+<div class="modal-overlay" id="settingsModalOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="modal-header">
+      <h2 id="settingsTitle">User Settings</h2>
+      <button class="close-btn" id="closeSettings">&times;</button>
+    </div>
+    <div class="modal-content">
+      <form id="settingsForm">
+        <div class="form-section">
+          <h3>Profile Information</h3>
+          <div class="form-group profile-picture-group">
+            <div class="profile-pic-container">
+              <div class="profile-pic-wrapper">
+                <img id="profilePicPreview" src="user.png" alt="Profile Preview"/>
+                <div class="profile-pic-overlay">
+                  <i class="fas fa-camera"></i>
+                </div>
+              </div>
+              <div class="profile-pic-actions">
+                <label for="profilePicInput" class="btn btn-primary btn-sm">
+                  <i class="fas fa-upload"></i> Upload Photo
+                </label>
+                <input type="file" id="profilePicInput" accept="image/*" hidden/>
+                <button type="button" class="btn btn-outline btn-sm" id="removePic">
+                  <i class="fas fa-trash-alt"></i> Remove
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="displayName">Display Name</label>
+            <div class="input-with-icon">
+              <i class="fas fa-user"></i>
+              <input type="text" id="displayName" placeholder="Your name" required/>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <div class="input-with-icon">
+              <i class="fas fa-phone"></i>
+              <input type="tel" id="phoneNumber" placeholder="+234 801 234 5678" pattern="\+234[0-9]{10}" required/>
+            </div>
+            <small class="form-hint">Enter a valid Nigerian phone number (+234...)</small>
+          </div>
+        </div>
+        
+        <div class="form-section">
+          <div class="section-title-container">
+            <h3>Change Password</h3>
+            <div class="toggle-switch">
+              <input type="checkbox" id="changePasswordToggle">
+              <label for="changePasswordToggle"></label>
+            </div>
+          </div>
+          
+          <div id="passwordFieldsContainer" class="password-fields hidden">
+            <div class="form-group">
+              <label for="currentPassword">Current Password</label>
+              <div class="input-with-icon">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="currentPassword" placeholder="••••••••"/>
+                <button type="button" class="password-toggle-btn">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="newPassword">New Password</label>
+              <div class="input-with-icon">
+                <i class="fas fa-key"></i>
+                <input type="password" id="newPassword" placeholder="••••••••"/>
+                <button type="button" class="password-toggle-btn">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="confirmPassword">Confirm New Password</label>
+              <div class="input-with-icon">
+                <i class="fas fa-check-circle"></i>
+                <input type="password" id="confirmPassword" placeholder="••••••••"/>
+                <button type="button" class="password-toggle-btn">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-buttons">
+          <button type="button" class="btn btn-secondary" id="cancelSettings">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Get DOM elements
+  const currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || {};
+  const modalOverlay = document.getElementById('settingsModalOverlay');
+  const openBtn = document.getElementById('openSettings');
+  const closeBtn = document.getElementById('closeSettings');
+  const cancelBtn = document.getElementById('cancelSettings');
+  const profileInput = document.getElementById('profilePicInput');
+  const profilePreview = document.getElementById('profilePicPreview');
+  const removePicBtn = document.getElementById('removePic');
+  const displayNameInput = document.getElementById('displayName');
+  const phoneInput = document.getElementById('phoneNumber');
+  const form = document.getElementById('settingsForm');
+  const userNameSpan = document.getElementById('userName');
+  const headerPic = document.querySelector('.user-profile img');
+  const changePasswordToggle = document.getElementById('changePasswordToggle');
+  const passwordFieldsContainer = document.getElementById('passwordFieldsContainer');
+  const passwordToggleBtns = document.querySelectorAll('.password-toggle-btn');
+  
+  // Toggle password fields visibility
+  changePasswordToggle.addEventListener('change', () => {
+    if (changePasswordToggle.checked) {
+      passwordFieldsContainer.classList.remove('hidden');
+      // Make password fields required when visible
+      document.querySelectorAll('#passwordFieldsContainer input').forEach(input => {
+        input.setAttribute('required', '');
+      });
+    } else {
+      passwordFieldsContainer.classList.add('hidden');
+      // Remove required attribute when hidden
+      document.querySelectorAll('#passwordFieldsContainer input').forEach(input => {
+        input.removeAttribute('required');
+      });
+    }
+  });
+  
+  // Toggle password visibility
+  passwordToggleBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const input = e.currentTarget.previousElementSibling;
+      const icon = e.currentTarget.querySelector('i');
+      
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    });
+  });
+
+  // Prefill form with user data
+  displayNameInput.value = currentUser.fullName || '';
+  phoneInput.value = currentUser.phone || '';
+  if (currentUser.profilePic) {
+    profilePreview.src = currentUser.profilePic;
+  }
+
+  // Open/Close modal functions
+  if (openBtn) {
+    openBtn.addEventListener('click', () => {
+      modalOverlay.style.display = 'flex';
+    });
+  }
+  
+  [closeBtn, cancelBtn].forEach(btn =>
+    btn.addEventListener('click', () => modalOverlay.style.display = 'none')
+  );
+  
+  modalOverlay.addEventListener('click', e => {
+    if (e.target === modalOverlay) modalOverlay.style.display = 'none';
+  });
+
+  // Handle profile picture preview
+  profileInput.addEventListener('change', () => {
+    const file = profileInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      profilePreview.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+  
+  // Handle remove picture button
+  removePicBtn.addEventListener('click', () => {
+    profilePreview.src = 'user.png';
+    profileInput.value = '';
+  });
+
+  // Save settings form submission
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    
+    // Get updated user info
+    currentUser.fullName = displayNameInput.value.trim();
+    currentUser.phone = phoneInput.value.trim();
+    currentUser.profilePic = profilePreview.src;
+    
+    // Handle password change if toggled on
+    if (changePasswordToggle.checked) {
+      const currPass = document.getElementById('currentPassword').value;
+      const newPass = document.getElementById('newPassword').value;
+      const confirmPass = document.getElementById('confirmPassword').value;
+      
+      if (!currPass || !newPass || !confirmPass) {
+        return alert('Please fill in all password fields.');
+      }
+      
+      if (currPass !== currentUser.password) {
+        return alert('Current password is incorrect.');
+      }
+      
+      if (newPass !== confirmPass) {
+        return alert('New passwords do not match.');
+      }
+      
+      currentUser.password = newPass;
+    }
+
+    // Save to sessionStorage
+    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+    // Update UI if elements exist
+    if (userNameSpan) {
+      userNameSpan.textContent = currentUser.fullName;
+    }
+    
+    if (headerPic) {
+      headerPic.src = currentUser.profilePic;
+    }
+
+    // Close modal and show success message
+    modalOverlay.style.display = 'none';
+    
+    // Create and show success message
+    showSuccessMessage('Settings saved successfully!');
+  });
+  
+  // Function to show success message
+  function showSuccessMessage(message) {
+    const successAlert = document.createElement('div');
+    successAlert.className = 'success-alert';
+    successAlert.innerHTML = `
+      <i class="fas fa-check-circle"></i>
+      <span>${message}</span>
+    `;
+    document.body.appendChild(successAlert);
+    
+    // Trigger animation
+    setTimeout(() => {
+      successAlert.classList.add('show');
+    }, 100);
+    
+    // Auto-hide after 3 seconds
+    setTimeout(() => {
+      successAlert.classList.remove('show');
+      setTimeout(() => {
+        document.body.removeChild(successAlert);
+      }, 500);
+    }, 3000);
+  }
+});
+
+      //Dashboard menu toggle & logout
+      const menuToggle = document.getElementById('menuToggle');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+        overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+      });
+      overlay.addEventListener('click', () => {
+        sidebar.classList.remove('active');
+        overlay.style.display = 'none';
+      });
+      document.getElementById('logoutBtn').addEventListener('click', e => {
+        e.preventDefault();
+        sessionStorage.removeItem('currentUser');
+        window.location.href = 'index.html';
+      });
+
+      // Load username
+      if (!currentUser.fullName) {
+        // redirect to login if not authenticated
+        window.location.href = 'index.html';
+      } else {
+        userNameSpan.textContent = currentUser.fullName;
+      }
+    ;
+  </script>
+
+  <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/68208f9608bed819150dc644/1iqvj1pit';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+</body>
+</html>

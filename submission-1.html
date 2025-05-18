@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annual Work-Plan 2025</title>
+    <link rel="stylesheet" href="submission-1.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Annual Work-Plan 2025</h1>
+        </header>
+        
+        <div class="instructions">
+            Please enter your planned activities, goals, and milestones for each quarter below.
+        </div>
+        
+        <form id="workPlanForm">
+            <div class="quarter-section">
+                <h2>Q1 (January - March)</h2>
+                <textarea name="q1-plan" placeholder="Enter your Q1 activities, goals, and key milestones here..." required></textarea>
+            </div>
+            
+            <div class="quarter-section">
+                <h2>Q2 (April - June)</h2>
+                <textarea name="q2-plan" placeholder="Enter your Q2 activities, goals, and key milestones here..." required></textarea>
+            </div>
+            
+            <div class="quarter-section">
+                <h2>Q3 (July - September)</h2>
+                <textarea name="q3-plan" placeholder="Enter your Q3 activities, goals, and key milestones here..." required></textarea>
+            </div>
+            
+            <div class="quarter-section">
+                <h2>Q4 (October - December)</h2>
+                <textarea name="q4-plan" placeholder="Enter your Q4 activities, goals, and key milestones here..." required></textarea>
+            </div>
+            
+            <div class="submit-container">
+                <button type="submit" class="submit-btn">Submit Work-Plan</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('workPlanForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+    // Redirect to the quarterly results page
+            window.location.href = "submission-2.html";
+    // Note: In a real implementation, you would typically save the form data
+    // before redirecting, either to a server or local storage
+        });
+    </script>
+</body>
+</html>

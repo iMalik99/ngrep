@@ -1,0 +1,85 @@
+<!-- Modified Login Page (login.html) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Secured Client Login - NGREP</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="top-logos">
+    <img src="sspl_logo.png" alt="System Strategy and Policy Lab" class="logo">
+    <img src="ngrep_logo.PNG" alt="NGREP Logo" class="logo">
+</div>
+<div class="login-card">
+    <h2>Secured Client Login</h2>
+    <div class="error-message" id="errorMessage"></div>
+    <form id="loginForm" onsubmit="return loginUser(event)">
+        <input type="email" id="email" placeholder="Email Address" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+    <p class="signup-text">
+        Don't Have an Account? <a href="register.html">Sign-up</a><br>
+        or Contact your Department Administrator to enroll you
+    </p>
+    <p class="contact-text">
+        Having Issue? <a href="contact-us.html">Contact us</a>
+    </p>
+</div>
+<footer>
+    Copyright © 2025 SStrategyLab. | All rights reserved
+</footer>
+
+<script>
+    function loginUser(event) {
+        event.preventDefault();
+        
+        // Get form values
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        // Error message element
+        const errorMessage = document.getElementById('errorMessage');
+        
+        // Reset error message
+        errorMessage.style.display = 'none';
+        
+        // Get users from localStorage
+        const users = JSON.parse(localStorage.getItem('ngrepUsers')) || [];
+        
+        // Find user with matching email and password
+        const user = users.find(u => u.email === email && u.password === password);
+        
+        if (!user) {
+            errorMessage.textContent = 'Invalid email or password';
+            errorMessage.style.display = 'block';
+            return false;
+        }
+        
+        // Store current user info in session storage
+        sessionStorage.setItem('currentUser', JSON.stringify({
+            fullName: user.fullName,
+            email: user.email,
+            state: user.state,
+            mdas: user.mdas
+        }));
+        
+        // Redirect to dashboard
+        window.location.href = 'dashboard.html';
+        
+        return false;
+    }
+    
+    // Check if user is already logged in
+    window.onload = function() {
+        const currentUser = sessionStorage.getItem('currentUser');
+        if (currentUser) {
+            // User is already logged in, redirect to dashboard
+            window.location.href = 'dashboard.html';
+        }
+    };
+</script>
+</body>
+</html>

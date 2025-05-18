@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Project - NGREP</title>
+  <link rel="stylesheet" href="new-projects.css">
+</head>
+<body>
+  <div class="main-content">
+    <h1 class="page-title">New Project</h1>
+
+    <div class="form-container">
+      <form id="newProjectForm">
+        <div class="form-section">
+          <h2 class="section-title">Project Details</h2>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="required">Project Name</label>
+              <input id="projectName" name="projectName" type="text" placeholder="Enter project name" required>
+            </div>
+            <div class="form-group">
+              <label class="required">Category</label>
+              <input type="text" placeholder="Enter the project category" required>
+            </div>
+            <div class="form-group">
+              <label class="required">Project Status</label>
+              <select id="status" name="status" required>
+                <option value="">Select status</option>
+                <option value="ongoing">Ongoing</option>
+                <option value="completed">Completed</option>
+                <option value="pending">Pending</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="required">Start Date</label>
+              <input type="date" required>
+            </div>
+            <div class="form-group">
+              <label class="required">End Date</label>
+              <input type="date" required>
+            </div>
+            <div class="form-group">
+              <label>Location</label>
+              <input type="text" placeholder="Enter project location">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2 class="section-title">Project Description</h2>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea placeholder="Enter project description"></textarea>
+          </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="section-title">Budget</h2>
+                <div class="form-group">
+                    <label>Estimated Budget</label>
+                    <input id="budgetInput" type="text" placeholder="₦0.00">
+                </div>
+        </div>
+
+        <div class="form-section">
+          <h2 class="section-title">File Uploads</h2>
+          <div class="file-uploads">
+            <label class="file-upload">
+              <input type="file" hidden>
+              <i>📁</i>
+              <p>Upload Document</p>
+            </label>
+            <label class="file-upload">
+              <input type="file" hidden>
+              <i>📁</i>
+              <p>Upload Document</p>
+            </label>
+            <label class="file-upload">
+              <input type="file" hidden>
+              <i>📁</i>
+              <p>Upload Document</p>
+            </label>
+            <label class="file-upload">
+              <input type="file" hidden>
+              <i>📁</i>
+              <p>Upload Plan</p>
+            </label>
+          </div>
+        </div>
+
+        <div class="btn-container">
+          <button type="submit" class="btn-primary">Create Project</button>
+        </div>
+      </form>
+    </div>
+
+    <footer>
+      Copyright © 2025 NGREP | All rights reserved
+    </footer>
+  </div>
+
+  <script>
+  const input = document.getElementById('budgetInput');
+  input.addEventListener('input', () => {
+    let rawValue = input.value.replace(/[^0-9.]/g, ''); // Allow digits & one decimal point
+    let parts = rawValue.split('.');
+    
+    // Limit to 2 decimal places
+    if (parts.length > 2) {
+      parts = [parts[0], parts[1].slice(0, 2)];
+    }
+
+    let formatted = Number(parts[0] || 0).toLocaleString();
+    if (parts[1] !== undefined) {
+      formatted += '.' + parts[1].slice(0, 2); // Add up to 2 decimal digits
+    }
+
+    input.value = '₦' + formatted;
+  });
+  
+// On form submit: grab values → sessionStorage → redirect
+    document.getElementById('newProjectForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name   = this.projectName.value.trim();
+      const status = this.status.value;
+      if (!name || !status) {
+        return alert('Please fill in all required fields.');
+      }
+
+      const now = new Date();
+      const fmt = d => {
+        const dd = String(d.getDate()).padStart(2,'0');
+        const mm = String(d.getMonth()+1).padStart(2,'0');
+        return `${dd}/${mm}/${d.getFullYear()}`;
+      };
+
+      const entry = {
+        submitted: fmt(now),
+        title:     name,
+        status:    status,
+        updated:   fmt(now)
+      };
+
+      // Save only *this* entry
+      sessionStorage.setItem('lastProject', JSON.stringify(entry));
+
+      // Redirect to your My Projects page
+      window.location.href = 'my-projects.html';
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NGREP - My Projects</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="my-projects.css">
+</head>
+<body>
+
+    <!-- Mobile menu toggle button -->
+    <button class="menu-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Overlay for mobile -->
+    <div class="overlay"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <img src="logo-ori.jpg" alt="NGREP Logo">
+        </div>
+        <ul class="sidebar-menu">
+            <li class="active"><a href="dashboard.html">Dashboard</a></li>
+            <li class="submenu-title">My Projects</li>
+            <li class="submenu"><b><a href="new-projects.html">New Project</a></b></li>
+            <li class="submenu"><b>Update Project</b></li>
+            <li class="submenu"><b>Download All Projects</b></li>
+            <li class="submenu-title">KPI & Targets</li>
+            <li class="submenu"><b>KPI Progress</b></li>
+            <li class="submenu"><b>Update KPI Progress</b></li>
+            <li class="submenu"><b>Targets</b></li>
+            <li class="submenu">Q1 Target <span style="font-size:9px;color:#999">(Jan-Mar)</span></li>
+            <li class="submenu">Q2 Target <span style="font-size:9px;color:#999">(Apr-Jun)</span></li>
+            <li class="submenu">Q3 Target <span style="font-size:9px;color:#999">(Jul-Sep)</span></li>
+            <li class="submenu">Q4 Target <span style="font-size:9px;color:#999">(Oct-Dec)</span></li>
+            <li class="submenu"><b>Pending Targets</b></li>
+            <li class="submenu"><b>Deadlines</b></li>
+            <li class="submenu"><b>Download KPI's</b></li>
+            <li class="submenu"><b>Download Targets</b></li>
+            <li class="submenu-title">Metrics</li>
+            <li class="submenu-title">Reports</li>
+            <li class="submenu"><b>New Report</b></li>
+            <li class="submenu"><b>Submitted Reports</b></li>
+            <li class="submenu"><b>Download Reports</b></li>
+            <li class="submenu">Q1 Report <span style="font-size:9px;color:#999">(Jan-Mar)</span></li>
+            <li class="submenu">Q2 Report <span style="font-size:9px;color:#999">(Apr-Jun)</span></li>
+            <li class="submenu">Q3 Report <span style="font-size:9px;color:#999">(Jul-Sep)</span></li>
+            <li class="submenu">Q4 Report <span style="font-size:9px;color:#999">(Oct-Dec)</span></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button class="settings"><i class="fas fa-cog"></i> User Settings</button>
+            <button class="support"><i class="fas fa-headset"></i> Help & Support</button>
+            <button class="logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-title">My Projects:</div>
+            <div class="header-buttons">
+                <button class="download"><a href="downloads.html"><i class="fas fa-download"></i> Downloads</a></button>
+                <button class="submission"><a href="submission-1.html"><i class="fas fa-plus"></i> New Submission</a></button>
+                <button class="notification" id="notificationBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">1</span>
+                </button>
+                <div class="user-profile">
+                    <span>User - Aminu Bala Henry</span>
+                    <img src="user.png" alt="User Profile">
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="filter-buttons">
+            <button class="filter-button active">All Projects</button>
+            <button class="filter-button">Completed Projects</button>
+            <button class="filter-button">Ongoing Projects</button>
+            <button class="filter-button">Delayed Projects</button>
+            <button class="filter-button">Rejected Projects</button>
+            <button class="filter-button">New Submissions</button>
+            <button class="filter-button">Deleted Projects</button>
+            <button class="filter-button">All KPIs Projects</button>
+        </div>
+
+        <!-- Projects Table -->
+        <div class="projects-container">
+            <h2 class="projects-title">Projects</h2>
+            <table class="projects-table">
+                <thead>
+                    <tr>
+                        <th class="date-column">Submission Date</th>
+                        <th class="title-column">Project Title</th>
+                        <th class="status-column">Status</th>
+                        <th class="updated-column">Last Updated</th>
+                        <th class="action-column">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>01/03/2025</td>
+                        <td>Youth Empowerment Program</td>
+                        <td class="status-completed">Completed</td>
+                        <td>01/02/2025</td>
+                        <td>
+                            <div class="action-button">
+                                View <a href="project-active.html"><i class="fas fa-chevron-down"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>18/03/2025</td>
+                        <td>Health Centre Renovation</td>
+                        <td class="status-progress">In Progress</td>
+                        <td>18/03/2025</td>
+                        <td>
+                            <div class="action-button">
+                                Edit <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>13/04/2025</td>
+                        <td>School Feeding Project</td>
+                        <td class="status-delayed">Delayed</td>
+                        <td>22/04/2025</td>
+                        <td>
+                            <div class="action-button">
+                                Edit <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <span>Page</span>
+            <a href="#">Prev</a>
+            <a href="#">1</a>
+            <span class="current">2</span>
+            <a href="#">3</a>
+            <span>...</span>
+            <a href="#">10</a>
+            <a href="#">Next</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Copyright © 2025 SSPolicyLab | All rights reserved</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+      const raw = sessionStorage.getItem('lastProject');
+      if (!raw) return;              // nothing new to append
+      const proj = JSON.parse(raw);
+
+      // Map your status values to labels & CSS classes:
+      const statusMap = {
+        ongoing:   ['In Progress', 'status-progress'],
+        completed: ['Completed',   'status-completed'],
+        pending:   ['Pending',     'status-delayed']
+      };
+      const [label, cls] = statusMap[proj.status] || ['Unknown',''];
+
+      // Create a new row:
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${proj.submitted}</td>
+        <td>${proj.title}</td>
+        <td class="${cls}">${label}</td>
+        <td>${proj.updated}</td>
+        <td>
+          <div class="action-button">
+            View <i class="fas fa-chevron-down"></i>
+          </div>
+        </td>`;
+
+      document.querySelector('.projects-table tbody').appendChild(tr);
+
+      // Clean up so it doesn’t duplicate on reload:
+      sessionStorage.removeItem('lastProject');
+    });
+
+    // JavaScript for sidebar toggling with overlay
+document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.overlay');
+    
+    // Create overlay if it doesn't exist
+    if (!overlay) {
+        const newOverlay = document.createElement('div');
+        newOverlay.className = 'overlay';
+        document.body.appendChild(newOverlay);
+    }
+    
+    // Toggle sidebar when menu button is clicked
+    menuToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('active');
+        document.querySelector('.overlay').classList.toggle('active');
+        document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+    });
+    
+    // Close sidebar when clicking on overlay
+    document.querySelector('.overlay').addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        this.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+    
+    // Handle window resize (close sidebar if window is resized to desktop)
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 768) {
+            sidebar.classList.remove('active');
+            document.querySelector('.overlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+});
+
+// Wait for the DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Get the modal elements
+  const modal = document.getElementById('notificationModal');
+  const btn = document.getElementById('notificationBtn');
+  const closeBtn = document.querySelector('.close-button');
+  const gotItBtn = document.querySelector('.got-it-btn');
+  
+  // Open the modal when the notification button is clicked
+  btn.addEventListener('click', function() {
+    modal.classList.add('show');
+  });
+  
+  // Close the modal when the X button is clicked
+  closeBtn.addEventListener('click', function() {
+    modal.classList.remove('show');
+  });
+  
+  // Close the modal when the "Got it" button is clicked
+  gotItBtn.addEventListener('click', function() {
+    modal.classList.remove('show');
+  });
+  
+  // Close the modal if the user clicks outside of it
+  window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+      modal.classList.remove('show');
+    }
+  });
+});
+
+    </script>
+  
+  <!-- Modal - Add this at the end of your body tag -->
+<div id="notificationModal" class="notification-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Notification</h3>
+      <span class="close-button">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="notification-icon">
+        <i class="fas fa-info-circle"></i>
+      </div>
+      <div class="notification-text">
+        <p class="notification-title">Welcome to NGREP,</p>
+        <p class="notification-message">Remember; Accountability is the glue that holds everything together.</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="got-it-btn">Got it</button>
+    </div>
+  </div>
+</div>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/68208f9608bed819150dc644/1iqvj1pit';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+</body>
+</html>

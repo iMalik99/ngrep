@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGREP - Project View</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f1f7f2; 
+            color: #333;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            background-color: white;
+            height: 100vh;
+            border-right: 1px solid #ddd;
+            padding: 0;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            padding: 3px 8px;
+            border-bottom: 0px solid #ddd;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            height: 80px;
+        }
+
+        .sidebar-logo img {
+            width: 95%;
+            height: auto;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-menu li.submenu-title a {
+            color: inherit;           /* Inherits the default text color */
+            text-decoration: none;    /* Removes underline */
+            display: block;           /* Makes the whole area clickable */
+            transition: background 0.3s ease;
+        }
+
+        .sidebar-menu li.submenu-title a:hover {
+            color: #556b2f;             /* Optional: changes text to white */
+        }
+
+        .sidebar-menu li.active a {
+            color: inherit;           /* Inherits the default text color */
+            text-decoration: none;    /* Removes underline */
+            display: block;           /* Makes the whole area clickable */
+            transition: background 0.3s ease;
+        }
+
+        .sidebar-menu li.active a:hover {
+            color: #556b2f;             /* Optional: changes text to white */
+        }
+
+        .sidebar-menu li {
+            padding: 4px 15px;
+            font-size: 16px;
+            color: #333;
+            cursor: pointer;
+            line-height: 1.3;
+        }
+
+        .sidebar-menu li.active {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        .sidebar-menu li.submenu {
+            padding-left: 30px;
+            color: #666;
+            font-size: 12px;
+            position: relative;
+        }
+
+        .sidebar-menu li.submenu span::before {
+            content: "→";
+            position: absolute;
+            left: 18px;
+            font-size: 10px;
+            color: #999;
+        }
+
+        .sidebar-menu li.submenu-title {
+            font-weight: bold;
+            margin-top: 5px;
+            color: #333;
+        }
+        
+        .sidebar-menu li.active-submenu-title {
+            font-weight: bold;
+            margin-top: 5px;
+            color: #556b2f;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        .sidebar-footer button {
+            width: 100%;
+            padding: 6px 8px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            text-align: left;
+        }
+
+        .sidebar-footer button i {
+            margin-right: 5px;
+            width: 16px;
+        }
+
+        .sidebar-footer .settings {
+            background-color: #f5f5f5;
+            color: #075e54;
+        }
+
+        .sidebar-footer .support {
+            background-color: #f5f5f5;
+            color: #0089d0;
+        }
+
+        .sidebar-footer .logout {
+            background-color: #f5f5f5;
+            color: #dc3545;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 200px;
+            padding: 20px;
+            width: calc(100% - 200px);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header-title {
+            font-size: 22px;
+            color: #556b2f;
+            font-weight: bold;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-buttons button {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .header-buttons .notification {
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-profile img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ddd;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background-color: white;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            color: #556b2f;
+            font-weight: bold;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-content {
+            padding: 20px;
+        }
+
+        /* Project View Styles */
+        .project-view-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .project-info {
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .project-info-row {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .project-info-label {
+            font-size: 12px;
+            color: #666;
+            width: 120px;
+        }
+
+        .project-info-value {
+            font-size: 13px;
+            font-weight: bold;
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .project-info-value i {
+            margin-right: 5px;
+            color: #556b2f;
+        }
+
+        .project-objective {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #666;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            color: #556b2f;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .performance-details {
+            margin-bottom: 20px;
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .progress-label {
+            width: 150px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .progress-bar-container {
+            flex: 1;
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #556b2f;
+            border-radius: 5px;
+        }
+
+        .progress-percentage {
+            margin-left: 10px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #556b2f;
+        }
+
+        .milestones-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .milestones-table th, .milestones-table td {
+            padding: 10px;
+            text-align: left;
+            font-size: 13px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .milestones-table th {
+            color: #666;
+            font-weight: normal;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .status-completed {
+            background-color: #28a745;
+        }
+
+        .status-progress {
+            background-color: #fd7e14;
+        }
+
+        .status-not-started {
+            background-color: #dc3545;
+        }
+
+        .kpi-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .kpi-table th, .kpi-table td {
+            padding: 8px;
+            text-align: left;
+            font-size: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .kpi-table th {
+            color: #666;
+            font-weight: normal;
+        }
+
+        .evidence-section {
+            margin-bottom: 20px;
+        }
+
+        .evidence-files {
+            display: flex;
+            gap: 10px;
+        }
+
+        .evidence-file {
+            padding: 8px 12px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .evidence-file i {
+            margin-right: 5px;
+            color: #556b2f;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <img src="logo-ori.jpg" alt="NGREP Logo">
+        </div>
+        <ul class="sidebar-menu">
+            <li class="active"><a href="dashboard.html">Dashboard</a></li>
+            <li class="active-submenu-title">My Projects</li>
+            <li class="submenu"><span>New Project</span></li>
+            <li class="submenu"><span>Update Project</span></li>
+            <li class="submenu"><span>Download All Projects</span></li>
+            <li class="submenu-title">KPI & Targets</li>
+            <li class="submenu"><span>KPI Progress</span></li>
+            <li class="submenu"><span>Update KPI Progress</span></li>
+            <li class="submenu"><span>Targets</span></li>
+            <li class="submenu">Q1 Target <span style="font-size:9px;color:#999">(Jan-Mar)</span></li>
+            <li class="submenu">Q2 Target <span style="font-size:9px;color:#999">(Apr-Jun)</span></li>
+            <li class="submenu">Q3 Target <span style="font-size:9px;color:#999">(Jul-Sep)</span></li>
+            <li class="submenu">Q4 Target <span style="font-size:9px;color:#999">(Oct-Dec)</span></li>
+            <li class="submenu"><span>Pending Targets</span></li>
+            <li class="submenu"><span>Deadlines</span></li>
+            <li class="submenu"><span>Download KPI's</span></li>
+            <li class="submenu"><span>Download Targets</span></li>
+            <li class="submenu-title">Metrics</li>
+            <li class="submenu-title">Reports</li>
+            <li class="submenu"><span>New Report</span></li>
+            <li class="submenu"><span>Submitted Reports</span></li>
+            <li class="submenu"><span>Download Reports</span></li>
+            <li class="submenu">Q1 Report <span style="font-size:9px;color:#999">(Jan-Mar)</span></li>
+            <li class="submenu">Q2 Report <span style="font-size:9px;color:#999">(Apr-Jun)</span></li>
+            <li class="submenu">Q3 Report <span style="font-size:9px;color:#999">(Jul-Sep)</span></li>
+            <li class="submenu">Q4 Report <span style="font-size:9px;color:#999">(Oct-Dec)</span></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button class="settings"><i class="fas fa-cog"></i> User Settings</button>
+            <button class="support"><i class="fas fa-headset"></i> Help & Support</button>
+            <button class="logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-title">My Projects:</div>
+            <div class="header-buttons">
+                <button><i class="fas fa-download"></i> Downloads</button>
+                <button><i class="fas fa-plus"></i> New Submission</button>
+                <button class="notification">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">1</span>
+                </button>
+                <div class="user-profile">
+                    <span>User - Aminu Bala Henry</span>
+                    <img src="user.png" alt="User Profile">
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Overlay -->
+        <div class="modal-overlay">
+            <!-- Project View Modal -->
+            <div class="modal">
+                <div class="modal-header">
+                    <h2 class="modal-title">Project View:</h2>
+                    <button class="close-button">&times;</button>
+                </div>
+                <div class="modal-content">
+                    <div class="project-view-header">
+                        <h3 class="section-title">Project Overview</h3>
+                    </div>
+                    
+                    <div class="project-info">
+                        <div class="project-info-row">
+                            <div class="project-info-label">Project Title:</div>
+                            <div class="project-info-value">
+                                <i class="fas fa-file-alt"></i>
+                                Youth Empowerment Program
+                            </div>
+                        </div>
+                        <div class="project-info-row">
+                            <div class="project-info-label">Project Location:</div>
+                            <div class="project-info-value">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Izambi LGA, Kaduna State
+                            </div>
+                            <div class="project-info-label">Category:</div>
+                            <div class="project-info-value">
+                                <i class="fas fa-sitemap"></i>
+                                Infrastructure
+                            </div>
+                        </div>
+                        <div class="project-info-row">
+                            <div class="project-info-label">Budget Allocated:</div>
+                            <div class="project-info-value">
+                                <i class="fas fa-money-bill-alt"></i>
+                                ₦320,910,953.20
+                            </div>
+                            <div class="project-info-label">Budget Used:</div>
+                            <div class="project-info-value">
+                                <i class="fas fa-calculator"></i>
+                                ₦320,910,953.20
+                            </div>
+                        </div>
+                        <div class="project-info-row">
+                            <div class="project-info-label">Start Date:</div>
+                            <div class="project-info-value">
+                                <i class="fas fa-calendar-alt"></i>
+                                01/04/2025
+                            </div>
+                            <div class="project-info-label">Expected End Date:</div>
+                            <div class="project-info-value">
+                                <i class="fas fa-flag-checkered"></i>
+                                06/04/2025
+                            </div>
+                        </div>
+                        <div class="project-info-row">
+                            <div class="project-info-label">Approval Status:</div>
+                            <div class="project-info-value">
+                                <i class="fas fa-check-circle"></i>
+                                Approved
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-objective">
+                        <strong>Project Objective:</strong>
+                        <p>This project is about a Youth Empowerment Program, in Kaduna state, Izambi LGA. The allocated budget was 320M naira, and all was spent to make sure everything goes well. The start date for the project is 01/04/2025 and the end date is supposed to be on 06/04/2025. This project is meant to empower youth of the Izambi LGA in Kaduna state. The target is to empower nothing less than 2,000 youths.</p>
+                    </div>
+
+                    <div class="performance-details">
+                        <h3 class="section-title">Performance Details</h3>
+                        <div class="progress-container">
+                            <div class="progress-label">Completion Percentage:</div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: 85%;"></div>
+                            </div>
+                            <div class="progress-percentage">85%</div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-label">Current Status:</div>
+                            <div class="status-indicator">
+                                <div class="status-dot status-progress"></div>
+                                <span>In progress</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="milestones">
+                        <h3 class="section-title">Milestones Achieved:</h3>
+                        <table class="milestones-table">
+                            <thead>
+                                <tr>
+                                    <th>Milestone</th>
+                                    <th>Status</th>
+                                    <th>Date Completed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Site Cleared</td>
+                                    <td>
+                                        <div class="status-indicator">
+                                            <div class="status-dot status-completed"></div>
+                                            <span>Completed</span>
+                                        </div>
+                                    </td>
+                                    <td>05 Jan 2025</td>
+                                </tr>
+                                <tr>
+                                    <td>Foundation Laid</td>
+                                    <td>
+                                        <div class="status-indicator">
+                                            <div class="status-dot status-progress"></div>
+                                            <span>In Progress</span>
+                                        </div>
+                                    </td>
+                                    <td>--</td>
+                                </tr>
+                                <tr>
+                                    <td>Site Construction Milestone</td>
+                                    <td>
+                                        <div class="status-indicator">
+                                            <div class="status-dot status-not-started"></div>
+                                            <span>Not Started</span>
+                                        </div>
+                                    </td>
+                                    <td>--</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="kpi-achievements">
+                        <h3 class="section-title">KPI Achievements:</h3>
+                        <table class="kpi-table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Target Value</th>
+                                    <th>Value Achieved</th>
+                                    <th>Target Timeline</th>
+                                    <th>Actual Timeline</th>
+                                    <th>Status</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Construct 10 class</td>
+                                    <td>10</td>
+                                    <td>8</td>
+                                    <td>Mar 2025</td>
+                                    <td>Apr 2025</td>
+                                    <td>80% Complete</td>
+                                    <td>Delayed by rains</td>
+                                </tr>
+                                <tr>
+                                    <td>Train 500 Farmers</td>
+                                    <td>500</td>
+                                    <td>500</td>
+                                    <td>Feb 2025</td>
+                                    <td>Feb 2025</td>
+                                    <td>100% Achieved</td>
+                                    <td>Target exceeded</td>
+                                </tr>
+                                <tr>
+                                    <td>Renovate 5 Schools</td>
+                                    <td>5</td>
+                                    <td>3</td>
+                                    <td>Mar 2025</td>
+                                    <td>--</td>
+                                    <td>60% Complete</td>
+                                    <td>Budget cut</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="evidence-section">
+                        <h3 class="section-title">Evidence of Work</h3>
+                        <div class="evidence-files">
+                            <div class="evidence-file">
+                                <i class="fas fa-file-pdf"></i>
+                                <span>Evidence.pdf</span>
+                            </div>
+                            <div class="evidence-file">
+                                <i class="fas fa-file-video"></i>
+                                <span>Evidence.mp4</span>
+                            </div>
+                            <div class="evidence-file">
+                                <i class="fas fa-file-pdf"></i>
+                                <span>Documents: Evidence.pdf</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Copyright © 2025 SPIPolyLab | All rights reserved</p>
+        </div>
+    </div>
+
+    <script>
+        // Modal close functionality
+        document.querySelector('.close-button').addEventListener('click', function() {
+            document.querySelector('.modal-overlay').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
